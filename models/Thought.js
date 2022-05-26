@@ -11,30 +11,34 @@ const thoughtSchema = new Schema(
     createdAt: {
         type: Date,
         default: Date.now,
+        get: (createdAtVal) => Date.prototype.toLocaleTimeString("en-GB", {timeZone: "UTC"})
     },
     username: {
-        type: Schema.Types.ObjectId,
-        ref: "user"
+        type: String,
+        required: true
     },
-    friends: {
-        type: Schema.Types.ObjectId,
-        ref: "user"
-    }
+    reactions: [reactionSchema]
 },
 {
     toJSON: {
         virtuals: true,
+        getters: true
     },
     id: false,
 }
 );
 
-function formatDate () {
+thoughtSchema.virtual("reactionCount").get(function () {
+    return this.reactions.length;
+})
 
-    oldDate = this.createdAt;
-    newDate = oldDate.toString();
-    return newDate;
-}
+// thoughtSchema.virtual("")
+// function formatDate () {
+
+//     oldDate = this.createdAt;
+//     newDate = oldDate.toString();
+//     return newDate;
+// }
 
 const Thought = model("thought", thoughtSchema);
 
