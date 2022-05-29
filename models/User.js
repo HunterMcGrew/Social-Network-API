@@ -19,10 +19,13 @@ const userSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "thought"
     },
-    friends: {
+    // needs to be an ARRAY with the OBJECT inside
+    friends: [{
+        
         type: Schema.Types.ObjectId,
         ref: "user"
-    }
+    }],
+    
 },
     {
         toJSON: {

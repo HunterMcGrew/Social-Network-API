@@ -23,7 +23,7 @@ module.exports = {
         User.findOne({ _id: req.params.id })
         .populate({ path: "thoughts", select: "-__v" })
         .populate({ path: "friends", select: "-__v" })
-        then((userData) => !userData ? 
+        .then((userData) => !userData ? 
         res.status(404).json({ message: "No user with that ID"}) 
         : res.json({ userData })
         )
@@ -43,7 +43,7 @@ module.exports = {
     },
     // delete a user
     deleteUser(req, res) {
-        User.findOneAndRemove({ _id: req.params.userId })
+        User.findOneAndRemove({ _id: req.params.id })
         .then((userData) => 
         !userData ? res.status(404).json({ message: "That user doesn't exist" })
         : res.status(200).json(userData))
@@ -54,7 +54,7 @@ module.exports = {
     },
     // update user patch not put? so it ONLY updates new info?
     updateUser(req, res) {
-        User.findOneAndUpdate({ _id: req.params.userId })
+        User.findOneAndUpdate({ _id: req.params.id })
         .then((userData) =>
         !userData ? res.status(404).json({ message: "That user doesn't exist"})
         : res.status(200).json(userData))

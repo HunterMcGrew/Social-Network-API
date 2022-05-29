@@ -36,7 +36,7 @@ module.exports = {
         Thought.create(req.body)
         .then(({ _id }) => {
             return User.findOneAndUpdate(
-                { _id: params.userId },
+                { _id: req.params.id },
                 { $push: { thoughts: _id }},
                 { new: true, runValidators: true }
             );
