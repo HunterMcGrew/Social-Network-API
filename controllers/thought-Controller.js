@@ -52,7 +52,7 @@ module.exports = {
     // update thought
     updateThought(req, res) {
         Thought.findOneAndUpdate(
-            { _id: params.id }, 
+            { _id: req.params.id }, 
             body, 
             { new: true, runValidators: true })
             .populate({
@@ -69,7 +69,7 @@ module.exports = {
     },
     // delete thought
     deleteThought(req, res) {
-        Thought.findOneAndDelete({ _id: params.id })
+        Thought.findOneAndDelete({ _id: req.params.id })
         .then(data => { !data ? res.status(404).json({ message: "Thought not found"}) :
         res.json(data);
         })
@@ -81,7 +81,7 @@ module.exports = {
     // add reaction
     addReaction(req, res) {
         Thought.findOneAndUpdate(
-            { _id: params.id },
+            { _id: req.params.id },
             // pushes reactions array 
             { $push: { reactions: body }},
             { new: true, runValidators: true }
