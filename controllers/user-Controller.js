@@ -67,9 +67,9 @@ module.exports = {
     addFriend(req, res) {
         User.findOneAndUpdate(
             // find user by user id
-            { _id: params.id },
+            { _id: req.params.id },
             // push the array of "friends" 
-            { $push: { friends: params.friendId }},
+            { $push: { friends: req.params.friendId }},
             // runValidators makes sure required fields ARE there 
             { new: true, runValidators: true }
         )
@@ -87,11 +87,11 @@ module.exports = {
     },
     // delete friend
     deleteFriend(req, res) {
-        User.findOneAndDelete(
+        User.findOneAndUpdate(
             // find user by ID
-            { _id: params.id },
+            { _id: req.params.id },
             // pull removes itmes from an array
-            { $pull: { friends: params.friendId }},
+            { $pull: { friends: req.params.friendId }},
             { new: true }
         )
         .populate({
