@@ -1,5 +1,10 @@
 const { Schema, model, Types } = require("mongoose");
 
+const formatDate = (date) => {
+    const newDate = new Date(date);
+    return newDate.toUTCString();
+};
+
 const reactionSchema = new Schema({
 
     reactionId: {
@@ -38,7 +43,7 @@ const thoughtSchema = new Schema(
     createdAt: {
         type: Date,
         default: Date.now,
-        get: (createdAtVal) => Date.prototype.toLocaleTimeString("en-GB", {timeZone: "UTC"})
+        get: formatDate
     },
     username: {
         type: String,
@@ -54,17 +59,11 @@ const thoughtSchema = new Schema(
     id: false,
 });
 
+
+
 thoughtSchema.virtual("reactionCount").get(function () {
     return this.reactions.length;
 });
-
-// thoughtSchema.virtual("")
-// function formatDate () {
-
-//     oldDate = this.createdAt;
-//     newDate = oldDate.toString();
-//     return newDate;
-// }
 
 const Thought = model("thought", thoughtSchema);
 

@@ -15,10 +15,10 @@ const userSchema = new Schema(
         required: true,
         validate: [ isEmail, "invalid email" ]
     },
-    thoughts: {
+    thoughts: [{
         type: Schema.Types.ObjectId,
         ref: "thought"
-    },
+    }],
     // needs to be an ARRAY with the OBJECT inside
     friends: [{
         

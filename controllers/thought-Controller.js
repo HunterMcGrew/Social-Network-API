@@ -32,7 +32,7 @@ module.exports = {
         })
     },
     // create thought
-    createThought(req, res) {
+    createThought(req, res) { // throwing error, not logging properly in insomnia
         Thought.create(req.body)
         .then(({ _id }) => {
             return User.findOneAndUpdate(
@@ -41,8 +41,8 @@ module.exports = {
                 { new: true, runValidators: true }
             );
         })
-        .then(data => { !data ? res.status(404).json({ message: "Problem while creating thought"}) :
-        res.json(data);
+        .then(thoughtData => { !thoughtData ? res.status(404).json({ message: "Problem while creating thought"}) :
+        res.json(thoughtData);
         })
         .catch(err => {
             if (err) throw err;
