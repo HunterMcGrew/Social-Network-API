@@ -23,7 +23,7 @@ const reactionSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        get: (createdAtVal) => Date.prototype.toLocaleTimeString("en-GB", {timeZone: "UTC"})
+        get: formatDate
     }
 },
 {

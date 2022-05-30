@@ -32,7 +32,7 @@ module.exports = {
         })
     },
     // create thought
-    createThought(req, res) { // throwing error, not logging properly in insomnia
+    createThought(req, res) { 
         Thought.create(req.body)
         .then(({ _id }) => {
             return User.findOneAndUpdate(
@@ -83,16 +83,15 @@ module.exports = {
         Thought.findOneAndUpdate(
             { _id: req.params.id },
             // pushes reactions array 
-            { $push: { reactions: body }},
+            { $push: { reactions: req.body }},
             { new: true, runValidators: true }
         )
         .populate({
             path: "reactions",
             select: "-__v"
         })
-        .then(data => { !data ? res.status(404).json({ message: "Thought not found"}) :
-        res.status(data);
-        })
+        .then(data => !data ? res.status(404).json({ message: "Thought not found"}) :
+        res.json(data))
         .catch(err => {
             if (err) throw err;
             res.status(500).json(err);
@@ -100,14 +99,14 @@ module.exports = {
     },
     // delete reaction
     deleteReaction(req, res) {
-        Thought.findOneAndDelete(
-            { _id: params.id },
+        Thought.findOneAndUpdate(
+            { _id: req.params.id },
             // removes reactions array
-            { $pull: { reactions: { reactionId: params.reactionId }}},
+            { $pull: { reactions: { reactionId: req.params.reactionId }}},
             { new: true }
         )
         .then(data => { !data ? res.status(404).json({ message: "Not found with this ID"}) :
-        res.status(data);
+        res.json(data)
         })
         .catch(err => {
             if (err) throw err;
