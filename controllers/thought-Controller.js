@@ -22,10 +22,9 @@ module.exports = {
             select: "-__v"
         })
         .select("-__v")
-        .then(data => { !data ? 
+        .then(data => !data ? 
         res.status(404).json({ message: "No thought associated witht his id"}) :
-        res.json(data);
-        })
+        res.json(data))
         .catch(err => {
             if (err) throw err;
             res.status(500).json(err);
@@ -59,9 +58,8 @@ module.exports = {
                 path: "reactions",
                 select: "-__v"
             })
-            .then(data => { !data ? res.status(404).json({ message: "Thought not found"}) :
-            res.json(data);
-        })
+            .then(data => !data ? res.status(404).json({ message: "Thought not found"}) :
+            res.json(data))
         .catch(err => {
             if (err) throw err; 
             res.status(500).json(err);
@@ -69,10 +67,9 @@ module.exports = {
     },
     // delete thought
     deleteThought(req, res) {
-        Thought.findOneAndDelete({ _id: req.params.id })
-        .then(data => { !data ? res.status(404).json({ message: "Thought not found"}) :
-        res.json(data);
-        })
+        Thought.findOneAndDelete({ _id: req.params.id })    
+        .then(data => !data ? res.status(404).json({ message: "Thought not found"}) :
+        res.json(data))
         .catch(err => {
             if (err) throw err; 
             res.status(500).json(err);
@@ -105,9 +102,8 @@ module.exports = {
             { $pull: { reactions: { reactionId: req.params.reactionId }}},
             { new: true }
         )
-        .then(data => { !data ? res.status(404).json({ message: "Not found with this ID"}) :
-        res.json(data)
-        })
+        .then(data => !data ? res.status(404).json({ message: "Not found with this ID"}) :
+        res.json(data))
         .catch(err => {
             if (err) throw err;
             res.status(500).json(err);

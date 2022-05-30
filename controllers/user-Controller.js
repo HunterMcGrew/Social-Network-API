@@ -7,12 +7,7 @@ module.exports = {
     // get all users
     getUsers(req, res) {
         User.find()
-        .then(async (users) => {
-            const userData = {
-                users,
-            };
-            return res.json(userData);
-        })
+        .then((users) => res.json(users))
         .catch((err) => {
             if (err) throw err;
             return res.status(500).json(err);
