@@ -36,14 +36,14 @@ module.exports = {
         Thought.create(req.body)
         .then(({ _id }) => {
             return User.findOneAndUpdate(
-                { _id: req.params.id },
+                { username: req.body.username },
                 { $push: { thoughts: _id }},
                 { new: true, runValidators: true }
             );
         })
-        .then(thoughtData => { !thoughtData ? res.status(404).json({ message: "Problem while creating thought"}) :
-        res.json(thoughtData);
-        })
+        .then(thoughtData =>  !thoughtData ? res.status(404).json({ message: "Problem while creating thought"}) :
+        res.json(thoughtData)
+        )
         .catch(err => {
             if (err) throw err;
             res.status(500).json(err);
