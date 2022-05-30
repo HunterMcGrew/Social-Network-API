@@ -53,7 +53,7 @@ module.exports = {
     updateThought(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.id }, 
-            body, 
+            req.body, 
             { new: true, runValidators: true })
             .populate({
                 path: "reactions",

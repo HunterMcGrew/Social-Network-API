@@ -17,7 +17,7 @@ router.route("/").get(getThoughts);
 // api/thoughts/:id
 router.route("/:id")
     .get(getSingleThought)
-    .patch(updateThought)
+    .put(updateThought)
     .delete(deleteThought);
 
 // api/thoughts/:userId
